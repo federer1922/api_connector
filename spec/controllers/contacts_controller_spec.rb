@@ -3,10 +3,8 @@ require "rails_helper"
 describe ContactsController, type: :controller do
 
   it "contacts list" do
-    get :index
+    get :index, params: { page_token: 2 }
     binding.pry
 
-    #result = JSON.parse(response.body)
-    #MultiJson.load(response.body)
   end
 end

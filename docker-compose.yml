@@ -1,7 +1,8 @@
 postgres:
   image: postgres:9.6
   ports:
-    - 54320:5432
+    - 54321:5432
   environment:
     - POSTGRES_USER=docker
     - POSTGRES_PASSWORD=docker
+  command: -p 5432
