@@ -1,20 +1,40 @@
 class ContactsController < ApplicationController
+  skip_forgery_protection
+  
   def index
-    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/list", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", per_page: 5, page: requested_page })
-    
-    result_json = MultiJson.load(result.body.to_s)
-    data = result_json["data"]
+    scoro_response = HTTP.post("https://arek.scoro.com/api/v2/contacts/list", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", per_page: 5, page: requested_page })
+    scoro_response_json = scoro_response.body.to_s
+    scoro_result = MultiJson.load(scoro_response_json)
+    data = scoro_result["data"]
    
-    response = { data: data, next_page_token: next_page_token(data)}
-    response_json = MultiJson.dump(response)
-    render json: response_json
+    my_response = { data: data, next_page_token: next_page_token(data)}
+
+    my_response_json = MultiJson.dump(my_response)
+    render json: my_response_json
 
   end
 
-  private
+  def create
+    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/modify", json:
+{
+    "apiKey": "ScoroAPI_a4e5e6ad85ecdcc",
+    "company_account_id": "arek",
+    "request": {
+        "contact_type": params["type"],
+        "name": params["name"],
+        "lastname": params["lastname"],
+        "means_of_contact": {"mobile"=>[params["mobile"]], "email"=>[params["email"]], "phone"=>[params["phone"]], "website"=>[params["website"]]},
+        "birthday": "",
+        "position": "",
+        "comments": "",
+        "sex": "",
+    }
+})
+    render json: result.body.to_s
+  end
 
   def requested_page
-    if params["page_token"]
+    if params["page_token"].present?
       page = params["page_token"].to_i
     else
       page = 1
