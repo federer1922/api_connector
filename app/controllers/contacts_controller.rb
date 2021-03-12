@@ -23,13 +23,19 @@ class ContactsController < ApplicationController
         "contact_type": params["type"],
         "name": params["name"],
         "lastname": params["lastname"],
-        "means_of_contact": {"mobile"=>[params["mobile"]], "email"=>[params["email"]], "phone"=>[params["phone"]], "website"=>[params["website"]]},
+        "means_of_contact": { "mobile"=>[params["mobile"]], "email"=>[params["email"]], "phone"=>[params["phone"]], "website"=>[params["website"]] },
         "birthday": "",
         "position": "",
         "comments": "",
         "sex": "",
     }
 })
+    render json: result.body.to_s
+  end
+
+  def delete
+    result = HTTP.delete("https://arek.scoro.com/api/v2/contacts/delete/(#{params["id"]})", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", "request": { "contact_id": params["id"] } })
+
     render json: result.body.to_s
   end
 

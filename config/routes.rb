@@ -5,5 +5,7 @@ Rails.application.routes.draw do
 
   get '/contacts', to: 'contacts#index'
 
-  post '/create_contact', to: 'contacts#create'
+  post '/contacts', to: 'contacts#create'
+
+  delete '/contacts', to: 'contacts#delete'
 end
