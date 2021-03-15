@@ -15,29 +15,22 @@ class ContactsController < ApplicationController
   end
 
   def create
-    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/modify", json:
-{
-    "apiKey": "ScoroAPI_a4e5e6ad85ecdcc",
-    "company_account_id": "arek",
-    "request": {
-        "contact_type": params["type"],
-        "name": params["name"],
-        "lastname": params["lastname"],
-        "means_of_contact": { "mobile"=>[params["mobile"]], "email"=>[params["email"]], "phone"=>[params["phone"]], "website"=>[params["website"]] },
-        "birthday": "",
-        "position": "",
-        "comments": "",
-        "sex": "",
-    }
-})
+    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/modify", json: { "apiKey": ENV["SCORO_API_KEY"], "company_account_id": "arek", "request": { "contact_type": params["type"], "name": params["name"], "lastname": params["lastname"], "means_of_contact": { "mobile"=>[params["mobile"]], "email"=>[params["email"]], "phone"=>[params["phone"]], "website"=>[params["website"]] } } })
     render json: result.body.to_s
   end
 
   def delete
-    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/delete/(#{params["id"]})", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", "request": { "contact_id": params["id"] } })
+    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/delete/(#{params["id"]})", json: { apiKey: ENV["SCORO_API_KEY"], company_account_id: "arek", "request": { "contact_id": params["id"] } })
 
     render json: result.body.to_s
   end
+
+  def show
+    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/view/(#{params["id"]})", json: { apiKey: ENV["SCORO_API_KEY"], company_account_id: "arek", "request": { "contact_id": params["id"] } })
+
+    render json: result.body.to_s
+  end
+
 
   def requested_page
     if params["page_token"].present?

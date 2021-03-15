@@ -9,5 +9,5 @@ Rails.application.routes.draw do
 
   delete '/contacts', to: 'contacts#delete'
 
-  get '/contacts', to: 'contacts#show'
+  get '/contacts/:id', to: 'contacts#show'
 end
