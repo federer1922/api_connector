@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   skip_forgery_protection
   
   def index
-    scoro_response = HTTP.post("https://arek.scoro.com/api/v2/contacts/list", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", per_page: 5, page: requested_page })
+    scoro_response = HTTP.post("https://arek.scoro.com/api/v2/contacts/list", json: { apiKey: ENV["SCORO_API_KEY"], company_account_id: "arek", per_page: 5, page: requested_page })
     scoro_response_json = scoro_response.body.to_s
     scoro_result = MultiJson.load(scoro_response_json)
     data = scoro_result["data"]
@@ -34,14 +34,14 @@ class ContactsController < ApplicationController
   end
 
   def delete
-    result = HTTP.delete("https://arek.scoro.com/api/v2/contacts/delete/(#{params["id"]})", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", "request": { "contact_id": params["id"] } })
+    result = HTTP.post("https://arek.scoro.com/api/v2/contacts/delete/(#{params["id"]})", json: { apiKey: "ScoroAPI_a4e5e6ad85ecdcc", company_account_id: "arek", "request": { "contact_id": params["id"] } })
 
     render json: result.body.to_s
   end
 
   def requested_page
     if params["page_token"].present?
-      page = params["page_token"].to_i
+      page = Base64.urlsafe_decode64(params["page_token"]).to_i
     else
       page = 1
     end
@@ -51,7 +51,7 @@ class ContactsController < ApplicationController
     if page_data.size < 5
       next_page_token = nil
     else
-      next_page_token = requested_page + 1   
+      next_page_token = Base64.urlsafe_encode64((requested_page + 1).to_s)
     end 
   end
 end
