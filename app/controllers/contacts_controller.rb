@@ -1,5 +1,6 @@
 class ContactsController < ApplicationController
   skip_forgery_protection
+  http_basic_authenticate_with name: "arek", password: ENV["PASSWORD"]
   
   def index
     scoro_client = ScoroClient.new
