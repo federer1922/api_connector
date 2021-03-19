@@ -12,8 +12,8 @@ class ScoroClient
     end    
   end
 
-  def create_contact(contact)
-    scoro_response = HTTP.post("https://arek.scoro.com/api/v2/contacts/modify", json: { "apiKey": ENV["SCORO_API_KEY"], "company_account_id": "arek", "request": contact })
+  def create_contact(contact_data)
+    scoro_response = HTTP.post("https://arek.scoro.com/api/v2/contacts/modify", json: { "apiKey": ENV["SCORO_API_KEY"], "company_account_id": "arek", "request": contact_data })
     
     success = scoro_response.status == 200
     

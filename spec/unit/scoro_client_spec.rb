@@ -16,25 +16,25 @@ describe ScoroClient do
 
   it "creates contact" do        
     scoro_client = ScoroClient.new
-    contact = { 
-      "type": "person",
+    contact_data = { 
+      "contact_type": "person",
       "name": "Olaf",
       "lastname": "Kowal",
-      "mobile": "+728555777",
-      "email": "olaf@gmail.com",
-      "phone": nil,
-      "website": nil
+      "means_of_contact": { "mobile"=>"+728555777", "email"=>"olaf@gmail.com", "phone"=>nil, "website"=>nil }
+
      }
 
     result = nil
     VCR.use_cassette('create_contact') do
-      result = scoro_client.create_contact(contact)
+      result = scoro_client.create_contact(contact_data)
     end
 
     expect(result[:success]).to be true
     expect(result[:contact]["name"]).to eq "Olaf"
+    expect(result[:contact]["contact_type"]).to eq "person"
+    expect(result[:contact]["means_of_contact"]["email"].join("")).to eq "olaf@gmail.com"
     expect(WebMock).to have_requested(:post, "https://arek.scoro.com/api/v2/contacts/modify")
-      .with(body: '{"apiKey":"ScoroAPI_a4e5e6ad85ecdcc","company_account_id":"arek","request":{"type":"person","name":"Olaf","lastname":"Kowal","mobile":"+728555777","email":"olaf@gmail.com","phone":null,"website":null}}')    
+      .with(body: '{"apiKey":"ScoroAPI_a4e5e6ad85ecdcc","company_account_id":"arek","request":{"contact_type":"person","name":"Olaf","lastname":"Kowal","means_of_contact":{"mobile":"+728555777","email":"olaf@gmail.com","phone":null,"website":null}}}')    
   end
 
   it "deletes contact" do

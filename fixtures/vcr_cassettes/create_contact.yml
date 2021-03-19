@@ -5,7 +5,7 @@ http_interactions:
     uri: https://arek.scoro.com/api/v2/contacts/modify
     body:
       encoding: UTF-8
-      string: '{"apiKey":"ScoroAPI_a4e5e6ad85ecdcc","company_account_id":"arek","request":{"type":"person","name":"Olaf","lastname":"Kowal","mobile":"+728555777","email":"olaf@gmail.com","phone":null,"website":null}}'
+      string: '{"apiKey":"ScoroAPI_a4e5e6ad85ecdcc","company_account_id":"arek","request":{"contact_type":"person","name":"Olaf","lastname":"Kowal","means_of_contact":{"mobile":"+728555777","email":"olaf@gmail.com","phone":null,"website":null}}}'
     headers:
       Connection:
       - close
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 17 Mar 2021 18:59:46 GMT
+      - Thu, 18 Mar 2021 22:41:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - openresty
       Fb-Created:
-      - '2021-03-17T18:59:46.388+00:00'
+      - '2021-03-18T22:41:09.108+00:00'
       Fb-Id:
-      - f0ea3a46-8752-11eb-8443-02ec1512ea96
+      - '087240f4-883b-11eb-bb57-0292732158e4'
       Fb-Reply-Id:
-      - f0d7e8cf-8752-11eb-9498-02734d169812
+      - '0868fa53-883b-11eb-9498-02734d169812'
       X-Fireball-Backend-Dynamic:
       - 1.3.4-27153ea-release
       X-Fireball-Frontend-Static:
@@ -44,6 +44,7 @@ http_interactions:
       - origin-when-cross-origin
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"OK","statusCode":200,"messages":null,"data":{"contact_id":78,"name":"Olaf","lastname":"","search_name":"Olaf","contact_type":"company","id_code":"","bankaccount":null,"birthday":null,"position":"","comments":null,"sex":"","vatno":"","timezone":"","manager_id":0,"manager_email":"","is_supplier":0,"is_client":1,"client_profile_id":0,"created_date":"2021-03-17T19:59:46+01:00","modified_date":"2021-03-17T19:59:46+01:00","deleted_date":null,"addresses":null,"means_of_contact":null,"tags":[],"reference_no":"","cat_id":4,"contact_users":[],"permissions":null,"custom_fields":null,"is_deleted":0}}'
-  recorded_at: Wed, 17 Mar 2021 18:59:46 GMT
+      string: '{"status":"OK","statusCode":200,"messages":null,"data":{"contact_id":87,"name":"Olaf","lastname":"Kowal","search_name":"Olaf
+        Kowal","contact_type":"person","id_code":"","bankaccount":null,"birthday":"0000-00-00","position":"","comments":null,"sex":"","vatno":"","timezone":"","manager_id":0,"manager_email":"","is_supplier":0,"is_client":0,"client_profile_id":0,"created_date":"2021-03-18T23:41:09+01:00","modified_date":"2021-03-18T23:41:09+01:00","deleted_date":null,"addresses":null,"means_of_contact":{"mobile":["+728555777"],"email":["olaf@gmail.com"]},"tags":[],"reference_no":"","cat_id":0,"contact_users":[],"permissions":null,"custom_fields":null,"is_deleted":0}}'
+  recorded_at: Thu, 18 Mar 2021 22:41:09 GMT
 recorded_with: VCR 6.0.0
